@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "mssql3": {
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Web/sites/ST10057249/providers/Microsoft.ServiceLinker/linkers/ConnectionStringsCLDV_9BD19EC063",
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/khumalocraftcldvdbserver/databases/aspnet-KhumaloCraft-aeb0ec11-2b4b-475e-8625-7da2e69f7e83",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:CLDV"
+    }
+  }
+}

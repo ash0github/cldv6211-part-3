@@ -1,0 +1,40 @@
+﻿@model KhumaloCraft.Models.Cart
+
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<h1>Cart</h1>
+<p><a asp-action="OrderHistory" class="btn btn-sm btn-primary">Order History</a></p>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
+    </thead>
+<tbody>
+        @if (Model != null)
+        {
+            @foreach (var item in Model.CartItems)
+            {
+                <tr>
+                    <td>@item.Product.ProductName</td>
+                    <td>@item.Product.ProductPrice</td>
+                    <td>@item.Quantity</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<form asp-action="Checkout" method="post">
+    <button type="submit" class="btn btn-primary">Checkout</button>
+</form>
+<p></p>
+<form asp-action="ClearCart" method="post">
+    <button type="submit" class="btn btn-sm btn-warning">Clear</button>
+</form>

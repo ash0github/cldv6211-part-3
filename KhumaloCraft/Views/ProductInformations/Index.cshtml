@@ -1,0 +1,93 @@
+﻿@model IEnumerable<KhumaloCraft.Models.ProductInformation>
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
+@{
+    ViewData["Title"] = "Product Information";
+}
+
+<h1>Product Information</h1>
+
+<p>
+    @if (User.IsInRole("Merchant"))
+    {
+        <a asp-action="Create" class="btn btn-sm btn-primary">Create New</a>
+    }
+</p>
+
+@if (Model != null && Model.Any())
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductCategory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductAvailability)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductCategory)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductAvailability)
+            </td>
+                @if (User.IsInRole("Merchant"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ProductID" class="btn btn-sm btn-warning">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.ProductID" class="btn btn-sm btn-info">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ProductID" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                }
+                else if (User.IsInRole("Consumer"))
+                {
+                    <td>
+                        <form asp-controller="Carts" asp-action="AddToCart" method="post">
+                            <input type="hidden" name="ProductId" value="@item.ProductID"/>
+                            <input type="hidden" name="Available" value="@(item.ProductAvailability ? "true" : "false")"/>
+                            <button type="submit" class="btn btn-sm btn-primary">Add to Cart</button>
+                        </form>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <a class="btn btn-sm btn-primary" onclick="alert('You need to be logged in to add items to the cart.')">Add to Cart</a>
+                    </td>
+                }
+        </tr>
+}
+    </tbody>
+</table>
+
+    @if (TempData["ItemAddedToCart"] != null && (bool)TempData["ItemAddedToCart"])
+    {
+        <script>
+            alert("Item added to cart successfully!");
+        </script>
+    }
+}
+else
+{
+    <p>No products available.</p>
+}

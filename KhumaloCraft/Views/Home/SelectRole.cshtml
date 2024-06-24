@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Select Role";
+}
+
+<div class="card text-center" style="background-color: rgba(255, 255, 255, 0.8); border-color: rgba(255, 255, 255, 0.0)">
+    <div class="card-body">
+        <h5 class="card-title">Select a Role:</h5>
+        <p class="card-text" style="color: palevioletred">Select a role below</p>
+        <form method="post" asp-action="SelectRole">
+            <button type="submit" name="role" value="Merchant" class="btn btn-primary">Merchant</button>
+            <button type="submit" name="role" value="Consumer" class="btn btn-primary">Consumer</button>
+        </form>
+    </div>
+</div>

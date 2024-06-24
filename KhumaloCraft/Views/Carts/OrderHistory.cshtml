@@ -1,0 +1,60 @@
+﻿@model IEnumerable<KhumaloCraft.Models.Cart>
+
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<h1>Order History</h1>
+<form asp-action="ClearCart" method="post">
+    <button type="submit" class="btn btn-sm btn-warning" onclick="return confirmClearOrders()">Clear Order History</button>
+</form>
+
+<script type="text/javascript">
+    function confirmClearOrders() 
+    {
+        return confirm("Are you sure you want to clear your order history?");
+    }
+</script>
+
+@foreach (var order in Model)
+{
+    <h3><br/>Order ID: @order.CartID</h3>
+    <p>Order Date: @order.OrderDate?.ToString("g")</p>
+    <table class="table">
+    @if (order.CartItems == null || !order.CartItems.Any())
+    {
+            <thead>
+                <tr>
+                    <th>This order contains no items or items are no longer available.</th>
+                </tr>
+            </thead>
+    }
+    else
+    {
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in order.CartItems)
+                {
+                    <tr>
+                        <td>@item.Product.ProductName</td>
+                        <td>@item.Product.ProductPrice</td>
+                        <td>@item.Quantity</td>
+                    </tr>
+                }
+            </tbody>
+    }
+    </table>
+}
+
+@if (TempData["Checkout"] != null && (bool)TempData["Checkout"])
+{
+    <script>
+        alert("Your payment has been processed and your order has been confirmed!");
+    </script>
+}
